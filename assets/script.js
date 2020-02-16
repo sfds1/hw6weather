@@ -20,9 +20,7 @@ $("#submit").on("click", function(event){
    url: queryURL,
    method: "GET"
  }).then(function(response) {
-   // Create CODE HERE to Log the queryURL
-   console.log(queryURL);
-   console.log(response);      
+ console.log(response);
    // Create CODE HERE to log the resulting object
    // Create CODE HERE to transfer content to HTML
    $('.date').text(today);
@@ -33,64 +31,73 @@ $("#submit").on("click", function(event){
    const f = (response.main.temp - 273.15) * 1.8 + 32;
    // Hint: To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
  //   SK - use toFixed to make it go to 2 decimal places
+    // Create CODE HERE to dump the temperature content into HTML
    $('.temp').text(`Temperature: ${f.toFixed(2)} F`);
-   // Create CODE HERE to dump the temperature content into HTML
+
+//    get openweathermap icons
+   const iconCode = (response.weather[0].icon);
+   $('.icon').attr("src", "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
 
 
 // nested AJAX call to get the UV Index using long and lat from first API call
         var lat = response.coord.lat;
         var long = response.coord.lon;
-        console.log(lat);
-        console.log(long);
 
         var queryURLUV =  "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + long;
 
-        console.log(queryURLUV);
         $.ajax({
             url: queryURLUV,
             method: "GET"
           }).then(function(responseUV) {
-              console.log (responseUV);
             $('.uvIndex').text(`UV Index: ${responseUV.value}`);
-
           });
-
-
  });
 
 
+// The URL to get the 16 day forecast weather
+var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + inputCity + "," + inputState + ",US&appid=" + APIKey;
 
-// The URL to get the 5 day forecast weather
-var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + inputCity + "," + inputState + ",US&appid=" + APIKey;
-var index =0;
 // We then create an AJAX call
 $.ajax({
   url: queryURLForecast,
   method: "GET"
 }).then(function(responseForecast) {
-  // Create CODE HERE to Log the queryURL
-  console.log(queryURLForecast);
-  console.log(responseForecast);      
+    console.log(responseForecast);
+    
+for (index =0; index <3; index++){
 
-var forecastDate = new Date(responseForecast.list[index].dt_txt).toDateString();
+    // dynamically create ul tags for each forecast day
+    var dateForecast = $("<ul>");
+    var tempForecast = $("<ul>");
+    var humidityForecast = $("<ul>");
+    var iconForecast = $("<img>");
 
-//   // Create CODE HERE to log the resulting object
-//   // Create CODE HERE to transfer content to HTML
-  $('.dateForecast').text(forecastDate);
-//   $('.city').text(`${responseForecast.name} Weather details`);
-  $('.humidityForecast').text(`Humidity: ${responseForecast.list[index].main.humidity}%`);
-//   $('.wind').text(`Wind speed: ${responseForecast.wind.speed} MPH`);
-//   // Create CODE HERE to calculate the temperature (converted from Kelvin)
-  const f2 = (responseForecast.list[index].main.temp - 273.15) * 1.8 + 32;
-//   // Hint: To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
-// //   SK - use toFixed to make it go to 2 decimal places
-  $('.tempForecast').text(`Temperature: ${f2.toFixed(2)} F`);
-//   // Create CODE HERE to dump the temperature content into HTML
+    // var forecastDate = new Date(responseForecast.list[index].dt).toDateString();
+    // console.log(responseForecast.list[index].dt);
+    // console.log(forecastDate);
 
+    // dateForecast.text(forecastDate);
+
+    // dateForecast = new Date(today.setDate(today.getDate()+1));
+
+    humidityForecast.text(`Humidity: ${responseForecast.list[index].humidity}%`);
+
+    // Create CODE HERE to calculate the temperature (converted from Kelvin)
+    const f2 = (responseForecast.list[index].temp.day - 273.15) * 1.8 + 32;
+    tempForecast.text(`Temperature: ${f2.toFixed(2)} F`);
+
+    iconForecastCode = (responseForecast.list[index].weather[0].icon);
+    iconForecast.attr("src", "http://openweathermap.org/img/wn/" + iconForecastCode + "@2x.png");
+
+    $("#forecast").append(dateForecast);
+    $("#forecast").append(tempForecast);
+    $("#forecast").append(humidityForecast);
+    $("#forecast").append(iconForecast);
+}
 
 });
-
 }
+
 });
 
 
