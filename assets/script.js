@@ -24,7 +24,7 @@ $("#submit").on("click", function(event){
    // Create CODE HERE to log the resulting object
    // Create CODE HERE to transfer content to HTML
    $('.date').text(today);
-   $('.city').text(`${response.name} Weather details`);
+   $('.city').text(`${response.name} Current weather details`);
    $('.humidity').text(`Humidity: ${response.main.humidity}%`);
    $('.wind').text(`Wind speed: ${response.wind.speed} MPH`);
    // Create CODE HERE to calculate the temperature (converted from Kelvin)
@@ -55,6 +55,7 @@ $("#submit").on("click", function(event){
 
 
 // The URL to get the 16 day forecast weather
+// could have used this for the current dates weather too
 var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + inputCity + "," + inputState + ",US&appid=" + APIKey;
 
 // We then create an AJAX call
@@ -62,9 +63,9 @@ $.ajax({
   url: queryURLForecast,
   method: "GET"
 }).then(function(responseForecast) {
-    console.log(responseForecast);
+    // console.log(responseForecast);
     
-for (index =0; index <3; index++){
+for (index =1; index <6; index++){
 
     // dynamically create ul tags for each forecast day
     var dateForecast = $("<ul>");
@@ -72,13 +73,11 @@ for (index =0; index <3; index++){
     var humidityForecast = $("<ul>");
     var iconForecast = $("<img>");
 
-    // var forecastDate = new Date(responseForecast.list[index].dt).toDateString();
+    var forecastDate = new Date(responseForecast.list[index].dt * 1000).toDateString();
     // console.log(responseForecast.list[index].dt);
     // console.log(forecastDate);
 
-    // dateForecast.text(forecastDate);
-
-    // dateForecast = new Date(today.setDate(today.getDate()+1));
+    dateForecast.text(forecastDate);
 
     humidityForecast.text(`Humidity: ${responseForecast.list[index].humidity}%`);
 
