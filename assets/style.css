@@ -21,10 +21,14 @@ h1{
     font-size: 20px;
 }
 
-
 .forecast{
+    border: 1px solid #ccc; /* Gray border */
+    text-align: center;
+}
 
-    background-color: lightgrey;
+h2{
+
+    /* background-color: lightgrey; */
     margin-top: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
 

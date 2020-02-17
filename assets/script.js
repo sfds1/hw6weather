@@ -64,6 +64,7 @@ $.ajax({
 }).then(function(responseForecast) {
     // console.log(responseForecast);
     
+    $("h2").text("5 Day Forecast");
 for (index =1; index <6; index++){
 
     // dynamically create ul tags for each forecast day
@@ -87,10 +88,10 @@ for (index =1; index <6; index++){
     iconForecastCode = (responseForecast.list[index].weather[0].icon);
     iconForecast.attr("src", "http://openweathermap.org/img/wn/" + iconForecastCode + "@2x.png");
 
-    $("#forecast").append(dateForecast);
-    $("#forecast").append(tempForecast);
-    $("#forecast").append(humidityForecast);
-    $("#forecast").append(iconForecast);
+    $("#"+index+"forecast").append(dateForecast);
+    $("#"+index+"forecast").append(tempForecast);
+    $("#"+index+"forecast").append(humidityForecast);
+    $("#"+index+"forecast").append(iconForecast);
 }
 
 });
