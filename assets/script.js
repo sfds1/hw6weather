@@ -11,7 +11,6 @@ $("#submit").on("click", function(event){
  // Class API key for openweathermap 
  var APIKey = "166a433c57516f51dfab1f7edaed8413";
 
-
  // The URL to get the current weather
  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + inputCity + "," + inputState + ",US&appid=" + APIKey;
 
@@ -20,11 +19,9 @@ $("#submit").on("click", function(event){
    url: queryURL,
    method: "GET"
  }).then(function(response) {
- console.log(response);
-   // Create CODE HERE to log the resulting object
-   // Create CODE HERE to transfer content to HTML
+
    $('.date').text(today);
-   $('.city').text(`${response.name} Current weather details`);
+   $('.city').text(`${response.name} current weather details`);
    $('.humidity').text(`Humidity: ${response.main.humidity}%`);
    $('.wind').text(`Wind speed: ${response.wind.speed} MPH`);
    // Create CODE HERE to calculate the temperature (converted from Kelvin)
@@ -51,6 +48,8 @@ $("#submit").on("click", function(event){
           }).then(function(responseUV) {
             $('.uvIndex').text(`UV Index: ${responseUV.value}`);
           });
+
+         
  });
 
 

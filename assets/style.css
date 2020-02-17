@@ -1,0 +1,31 @@
+
+h1{
+    text-align: center;
+    font-weight: 500;
+    color: blue
+    
+
+}
+
+
+.current{
+    border: 1px solid #ccc; /* Gray border */
+    text-align: center;
+}
+
+.city{
+    font-size: 24px;
+}
+
+.date{
+    font-size: 20px;
+}
+
+
+.forecast{
+
+    background-color: lightgrey;
+    margin-top: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
